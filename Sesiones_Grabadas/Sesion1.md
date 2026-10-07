@@ -44,4 +44,4 @@ Se va a tener dentro del campus un enlace a un repositorio del GitHub de Antonio
 
 # Librería que vamos a estar utilizando siempre
 
-***PySide6***
+***PySide6*** 
