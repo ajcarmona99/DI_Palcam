@@ -51,3 +51,31 @@ def login(usuario, password):
     row = cursor.fetchone()
     conexion.close()
     return row[0] if row else None
+
+## Esta funcion lo que hace es actualizar los campos del id del usuario
+## que se introducen en la interfaz
+def actualizar(id_usuario, usuario, password):
+    # Me conecto a la base de datos
+    conexion = conectar()
+
+    try:
+        cursor = conexion.cursor()
+
+        cursor.execute(
+            "UPDATE usuarios SET usuario = ?, password = ? WHERE id = ?",
+            (usuario, password, id_usuario)
+        )
+
+        # Como hago cambios en la base de datos tengo que confirmarlo a partir de un commit
+        conexion.commit()
+
+        # Devuelve False si no existe ningun usuario con ese ID
+        return cursor.rowcount > 0
+    except sqlite3.Error:
+        # Hecho marcha atrás en los cambios que haya producido
+        conexion.rollback()
+
+        # Lanzo una excepcion
+        raise
+    finally:
+        conexion.close()
